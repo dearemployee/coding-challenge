@@ -1,0 +1,8 @@
+build/
+node_modules/
+coverage/
+app/
+verify-environment.js
+public
+env.js
+src/**/*.map
