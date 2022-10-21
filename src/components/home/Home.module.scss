@@ -1,0 +1,27 @@
+.homeComponentContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.headerText {
+  font-size: 70px;
+}
+
+.homeComponentSearchField {
+  width: 100%;
+  max-width: 584px;
+}
+
+.homeComponentButton {
+  text-transform: capitalize;
+}
+
+.homeComponentButtonsContainer {
+  display: flex;
+  gap: 16px;
+}
