@@ -1,0 +1,27 @@
+.searchResultComponentContainer {
+  height: 100vh;
+}
+
+.searchResultComponentHeader {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+.searchResultComponentButton {
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+.searchResultComponentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 74vh;
+  overflow-y: auto;
+  padding: 20px 0;
+}
+
+.searchResultComponentFooter {
+  height: 10vh;
+}
