@@ -17,6 +17,7 @@ type ResultCardProps = {
 
 const ResultCard = ({ cat, setTag }: ResultCardProps) => {
   const imgUrl = process.env.REACT_APP_IMAGE_URL;
+  const date = new Date(cat.createdAt).toDateString();
 
   const handlePillClick = async (event: React.MouseEvent<HTMLInputElement>) => {
     setTag(event.currentTarget.innerText);
@@ -40,7 +41,7 @@ const ResultCard = ({ cat, setTag }: ResultCardProps) => {
 
         <Stack className={styles.resultCardDetailStack}>
           <CalendarTodayOutlinedIcon />
-          <Typography>{cat.createdAt}</Typography>
+          <Typography>{date}</Typography>
         </Stack>
 
         <Stack className={styles.resultCardPills}>
