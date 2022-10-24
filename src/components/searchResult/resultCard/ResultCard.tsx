@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 
+import { CatType } from 'types/cat-type';
+import CustomPill from 'components/customPill/CustomPill';
+
 import styles from './ResultCard.module.scss';
 
-const ResultCard = () => {
+type ResultCardProps = {
+  cat: CatType;
+  setTag: Dispatch<SetStateAction<string>>;
+};
+
+const ResultCard = ({ cat, setTag }: ResultCardProps) => {
+  const imgUrl = process.env.REACT_APP_IMAGE_URL;
+
+  const handlePillClick = async (event: React.MouseEvent<HTMLInputElement>) => {
+    setTag(event.currentTarget.innerText);
+  };
+
   return (
     <Box className={styles.resultCardContainer}>
       <Box className={styles.resultCardImageContainer}>
         <img
           className={styles.resultCardImage}
-          src="https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-superJumbo.jpg?quality=75&auto=webp"
+          src={`${imgUrl}/${cat._id}`}
           alt="cat image"
         />
       </Box>
@@ -22,19 +35,18 @@ const ResultCard = () => {
       <Box className={styles.resultCardDetails}>
         <Stack className={styles.resultCardDetailStack}>
           <PersonOutlineOutlinedIcon />
-          <Typography>John Doe</Typography>
+          <Typography>{cat.owner}</Typography>
         </Stack>
 
         <Stack className={styles.resultCardDetailStack}>
           <CalendarTodayOutlinedIcon />
-          <Typography>20 sep 2022</Typography>
+          <Typography>{cat.createdAt}</Typography>
         </Stack>
 
         <Stack className={styles.resultCardPills}>
-          <Chip label="Friend" onClick={() => null} />
-          <Chip label="Friend" onClick={() => null} />
-          <Chip label="Friend" onClick={() => null} />
-          <Chip label="Friend" onClick={() => null} />
+          {cat.tags.map((tag, ind) => (
+            <CustomPill key={ind} label={tag} onClick={handlePillClick} />
+          ))}
         </Stack>
       </Box>
     </Box>

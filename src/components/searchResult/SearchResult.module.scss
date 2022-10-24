@@ -25,3 +25,10 @@
 .searchResultComponentFooter {
   height: 10vh;
 }
+
+.noResultComponent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 74vh;
+}

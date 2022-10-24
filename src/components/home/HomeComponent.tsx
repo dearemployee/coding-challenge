@@ -29,13 +29,13 @@ const HomeComponent = () => {
   };
 
   const handleSearchButton = () => {
-    if (value) {
+    if (value !== null) {
       navigate('search-results', { state: { tag: value, lucky: false } });
     }
   };
 
   const handleFeelingLuckyButton = () => {
-    if (value) {
+    if (value !== null) {
       navigate('search-results', { state: { tag: value, lucky: true } });
     }
   };
