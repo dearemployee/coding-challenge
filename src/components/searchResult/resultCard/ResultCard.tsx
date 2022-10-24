@@ -12,7 +12,7 @@ import styles from './ResultCard.module.scss';
 
 type ResultCardProps = {
   cat: CatType;
-  setTag: Dispatch<SetStateAction<string>>;
+  setTag: Dispatch<SetStateAction<string[]>>;
 };
 
 const ResultCard = ({ cat, setTag }: ResultCardProps) => {
@@ -20,7 +20,7 @@ const ResultCard = ({ cat, setTag }: ResultCardProps) => {
   const date = new Date(cat.createdAt).toDateString();
 
   const handlePillClick = async (event: React.MouseEvent<HTMLInputElement>) => {
-    setTag(event.currentTarget.innerText);
+    setTag([event.currentTarget.innerText]);
   };
 
   return (

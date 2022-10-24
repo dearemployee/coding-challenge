@@ -20,7 +20,7 @@ const SearchResultComponent = () => {
   const [loadMore, setLoadMore] = useState(false);
   const [catResult, setCatResult] = useState<CatType[]>([]);
 
-  const [catTag, setCatTag] = useState('');
+  const [catTags, setCatTags] = useState<string[]>([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,7 +30,7 @@ const SearchResultComponent = () => {
 
     try {
       if (location.state.lucky) {
-        const query = `${catTag}`;
+        const query = `${catTags.join(',')}`;
 
         const catDetails = await appRepository.getRandomCat(query);
         setCatResult([catDetails]);
@@ -38,11 +38,11 @@ const SearchResultComponent = () => {
       } else {
         const query = `?limit=${Paginations.MIN_PAGINATION_PAGE_SIZE}&skip=${
           Paginations.MIN_PAGINATION_PAGE * Paginations.MIN_PAGINATION_PAGE_SIZE
-        }&tags=${catTag}`;
+        }&tags=${catTags.join(',')}`;
 
         const catDetails = await appRepository.getCats(query);
         setCatResult(catDetails);
-        setLoadMore(catDetails.length > 0);
+        setLoadMore(catDetails.length >= Paginations.MIN_PAGINATION_PAGE_SIZE);
       }
     } catch (error) {
       console.error(error);
@@ -54,13 +54,11 @@ const SearchResultComponent = () => {
   const handleLoadMore = async (newPage: number) => {
     const query = `?limit=${Paginations.MIN_PAGINATION_PAGE_SIZE}&skip=${
       newPage * Paginations.MIN_PAGINATION_PAGE_SIZE
-    }&tags=${catTag}`;
-
-    console.log(query);
+    }&tags=${catTags.join(',')}`;
 
     const catDetails = await appRepository.getCats(query);
     setCatResult([...catResult, ...catDetails]);
-    setLoadMore(catDetails.length > 0);
+    setLoadMore(catDetails.length >= Paginations.MIN_PAGINATION_PAGE_SIZE);
   };
 
   const handleBackButton = () => {
@@ -68,11 +66,14 @@ const SearchResultComponent = () => {
   };
 
   useEffect(() => {
-    if (location.state) {
-      setCatTag(location.state.tag);
+    if (location.state) setCatTags(location.state.tag);
+  }, []);
+
+  useEffect(() => {
+    if (location.state && catTags.length > 0) {
       getSearchResult();
     }
-  }, [catTag]);
+  }, [catTags]);
 
   const NoResult = () => (
     <Box className={styles.noResultComponent}>
@@ -112,7 +113,7 @@ const SearchResultComponent = () => {
         >
           {catResult.length > 0 ? (
             catResult.map((cat, ind) => (
-              <ResultCard key={ind} cat={cat} setTag={setCatTag} />
+              <ResultCard key={ind} cat={cat} setTag={setCatTags} />
             ))
           ) : (
             <NoResult />

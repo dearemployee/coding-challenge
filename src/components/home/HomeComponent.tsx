@@ -3,19 +3,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import Autocomplete from '@mui/material/Autocomplete';
 
 import { useNavigate } from 'react-router-dom';
 
-import GeneralIcons from '../../icon/GeneralIcons';
 import { appRepository } from '../../repositories/app-repository';
 
 import styles from './Home.module.scss';
+import Checkbox from '@mui/material/Checkbox';
 
 const HomeComponent = () => {
   const [catTags, setCatTags] = useState<string[]>([]);
-  const [value, setValue] = useState<string | null>('');
+  const [value, setValue] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
@@ -52,26 +51,23 @@ const HomeComponent = () => {
 
       <Autocomplete
         role="search"
-        freeSolo
+        multiple
+        disableCloseOnSelect
+        limitTags={2}
         options={catTags}
-        onChange={(e, newValue) => setValue(newValue)}
+        getOptionLabel={(option) => option}
+        onChange={(e, newValues) => setValue(newValues)}
         classes={{
           input: styles.inputRoot,
         }}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox checked={selected} />
+            {option}
+          </li>
+        )}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            autoFocus
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <GeneralIcons.SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-            onChange={(e) => setValue(e.target.value)}
-          />
+          <TextField {...params} autoFocus placeholder="Search tags..." />
         )}
         className={styles.homeComponentSearchField}
       />
