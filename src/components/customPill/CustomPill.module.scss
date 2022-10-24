@@ -1,0 +1,17 @@
+.CustomPillButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 8px 12px;
+  text-transform: capitalize;
+  box-shadow: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(80%);
+    transition: all 0.2s ease-in-out;
+  }
+}

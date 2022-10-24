@@ -1,0 +1,8 @@
+node_modules
+public
+.vscode
+cloudformation
+test
+src/**/*.map
+src/**/*.ttf
+src/**/*.txt
